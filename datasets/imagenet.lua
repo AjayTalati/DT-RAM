@@ -112,10 +112,15 @@ local pca = {
 
 function ImagenetDataset:preprocess()
    if self.split == 'train' then
+      local Crop = self.opt.RandomSizeCrop and t.RandomSizeCrop or t.RandomCrop
+      local imageSize = self.opt.imageSize
+      if self.opt.RandomSizeCrop then 
+          imageSize = self.opt.cropSize
+      end 
       return t.Compose{
          -- t.RandomSizedCrop(224),
-	 t.Scale(self.opt.imageSize),
-	 t.RandomCrop(self.opt.cropSize),
+	     t.Scale(imageSize),
+	     Crop(self.opt.cropSize),
          t.ColorJitter({
             brightness = 0.4,
             contrast = 0.4,
