@@ -119,8 +119,8 @@ function ImagenetDataset:preprocess()
       end 
       return t.Compose{
          -- t.RandomSizedCrop(224),
-	     t.Scale(imageSize),
-	     Crop(self.opt.cropSize),
+	 t.Scale(imageSize),
+	 Crop(self.opt.cropSize),
          t.ColorJitter({
             brightness = 0.4,
             contrast = 0.4,
