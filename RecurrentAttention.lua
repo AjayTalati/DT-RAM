@@ -47,9 +47,9 @@ function RecurrentAttention:updateOutput(input)
 
    local nDim = input:dim()
    if train ~= false then
-		 self.output = {} -- rnn output
-		 self.actions = {} -- action output
-		 self.gradHidden = {}
+       self.output = {} -- rnn output
+       self.actions = {} -- action output
+       self.gradHidden = {}
    end
 
    for step=1, self.nStep do
@@ -64,11 +64,11 @@ function RecurrentAttention:updateOutput(input)
          self.actions[step] = self.action[step]:updateOutput(self.output[step-1])
       end
       -- rnn handles the recurrence internally
-	  if step == 1 then
-		 output = self.rnn[step]:updateOutput(input)
-	  else
+      if step == 1 then
+         output = self.rnn[step]:updateOutput(input)
+      else
          output = self.rnn[step]:updateOutput{{input, self.actions[step], step},self.output[step - 1]}
-	  end
+      end
       self.output[step] = self.forwardActions and {output, self.actions[step]} or output
 
    end
@@ -104,9 +104,9 @@ function RecurrentAttention:updateGradInput(input, gradOutput)
          nn.rnn.recursiveAdd(self.gradHidden[step], gradOutput_)
       end
 	  
-	  if self.gradPrevOutput then
-		nn.rnn.recursiveAdd(self.gradHidden[step], self.gradPrevOutput)
-	  end
+      if self.gradPrevOutput then
+         nn.rnn.recursiveAdd(self.gradHidden[step], self.gradPrevOutput)
+      end
       
       if step == 1 then
          -- backward through initial starting actions
@@ -117,17 +117,17 @@ function RecurrentAttention:updateGradInput(input, gradOutput)
       end
       
       -- 2. backward through the rnn layer
-	  if step == 1 then
-			gradInput = self.rnn[step]:updateGradInput(input, self.gradHidden[step])
-	  else
-			tmp = self.rnn[step]:updateGradInput({{input, self.actions[step]}, self.output[step - 1]}, self.gradHidden[step])
-			gradInput = tmp[1][1]
-			self.gradPrevOutput = tmp[2]
-	  end
-      if step == self.nStep then
-         self.gradInput:resizeAs(gradInput):copy(gradInput)
+      if step == 1 then
+          gradInput = self.rnn[step]:updateGradInput(input, self.gradHidden[step])
       else
-         self.gradInput:add(gradInput)
+          tmp = self.rnn[step]:updateGradInput({{input, self.actions[step]}, self.output[step - 1]}, self.gradHidden[step])
+          gradInput = tmp[1][1]
+          self.gradPrevOutput = tmp[2]
+      end
+      if step == self.nStep then
+          self.gradInput:resizeAs(gradInput):copy(gradInput)
+      else
+          self.gradInput:add(gradInput)
       end
    end
 
@@ -151,11 +151,11 @@ function RecurrentAttention:accGradParameters(input, gradOutput, scale)
          self.action[step]:accGradParameters(self.output[step-1], gradAction_, scale)
       end
       -- 2. backward through the rnn layer
-	  if step == 1 then
-		self.rnn[step]:accGradParameters(input, self.gradHidden[step], scale)
-	  else
-		self.rnn[step]:accGradParameters({{input, self.actions[step]}, self.output[step - 1]}, self.gradHidden[step], scale)
-	  end
+      if step == 1 then
+          self.rnn[step]:accGradParameters(input, self.gradHidden[step], scale)
+      else
+          self.rnn[step]:accGradParameters({{input, self.actions[step]}, self.output[step - 1]}, self.gradHidden[step], scale)
+      end
    end
 end
 
