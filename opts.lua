@@ -17,7 +17,7 @@ function M.parse(arg)
    cmd:option('-unitPixels',      13,     "the locator unit (1,1) maps to pixels (13,13), or (-1,-1) maps to (-13,-13)")
    cmd:option('-locatorStd',      0.12,   'stdev of gaussian location sampler (between 0 and 1) (low values may cause NaNs)')
    cmd:option('-stochastic',      false,  'Reinforce modules forward inputs stochastically during evaluation')
-   cmd:option('-uniform',         0.1, 'initialize parameters using uniform distribution between -uniform and uniform. -1 means default initialization')
+   cmd:option('-uniform',         0.1,    'initialize parameters using uniform distribution between -uniform and uniform. -1 means default initialization')
    --[[ glimpse layer ]]--
    cmd:option('-glimpseHiddenSize',128,   'size of glimpse hidden layer')
    cmd:option('-glimpsePatchSize', 8,     'size of glimpse patch at highest res (height = width)')
@@ -44,7 +44,7 @@ function M.parse(arg)
    ------------- Data options ------------------------
    cmd:option('-nThreads',         4,        'number of data loading threads')
    ------------- Training options --------------------
-   cmd:option('-nEpochs',          90,      'Number of total epochs to run')
+   cmd:option('-nEpochs',          90,       'Number of total epochs to run')
    cmd:option('-epochNumber',      1,        'Manual epoch number (useful on restarts)')
    cmd:option('-batchSize',        96,       'mini-batch size (1 = pure stochastic)')
    cmd:option('-testOnly',         false,    'Run on validation set only')
