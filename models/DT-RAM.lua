@@ -48,7 +48,7 @@ local function createModel(opt, retrainModel, modelNextStep)
    
    for i, m in ipairs(retrainModel.modules) do
        if torch.type(m):find('SpatialBatchNormalization') then
-	       m.freeze = true
+           m.freeze = true
        end
    end
 
@@ -83,7 +83,7 @@ local function createModel(opt, retrainModel, modelNextStep)
    
    agent:add(concat2)
 	
-    agent:cuda()
+   agent:cuda()
     -- print(agent)
    return agent
 end
