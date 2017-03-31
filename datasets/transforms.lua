@@ -61,7 +61,6 @@ end
 -- Random crop form larger image with optional zero padding
 function M.RandomCrop(size, padding)
    padding = padding or 0
-
    return function(input)
       if padding > 0 then
          local temp = input.new(3, input:size(2) + 2*padding, input:size(3) + 2*padding)
@@ -130,7 +129,6 @@ end
 function M.RandomSizedCrop(size)
    local scale = M.Scale(size)
    local crop = M.CenterCrop(size)
-
    return function(input)
       local attempt = 0
       repeat

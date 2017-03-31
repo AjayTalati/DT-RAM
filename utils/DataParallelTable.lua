@@ -18,7 +18,9 @@ end
 
 function DataParallelTable:getAction(idx)
    local prevGpuid = cutorch.getDevice()
-
+   if not self.ActionGpu then 
+       self.ActionGpu = {}
+   end
    -- update output for each module
    self.ActionGpu = self.impl:exec(function(m, i)
       nodes = m:findName(idx)
@@ -36,7 +38,9 @@ end
 
 function DataParallelTable:reinforce(reward, idx, mode)
    local prevGpuid = cutorch.getDevice()
-
+   if not self.rewardGpu then 
+        self.rewardGpu = {}
+   end
    -- distribute the input to GPUs
    self:_distribute(self.rewardGpu, reward)
 
