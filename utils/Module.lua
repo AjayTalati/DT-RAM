@@ -17,7 +17,7 @@ function Module:findName(name, container)
       for i = 1, #self.modules do
         local child = self.modules[i]
         local cur_nodes, cur_containers =
-          child:findName(name, self)
+        child:findName(name, self)
         assert(#cur_nodes == #cur_containers,
           'Internal error: incorrect return length')  -- This shouldn't happen
         -- add the list items from our child to our list (ie return a
