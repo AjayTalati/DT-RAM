@@ -21,14 +21,14 @@ local function createModel(opt, modelPreStep)
           table.insert(RAM.modules,RAM.rnn[RAM.nStep])
        end
        if opt.freezeParam then
-           for i = 1, RAM.nStep - 1 do
-               RAM.action[i].parameters = function() return nil end
-               RAM.action[i].accGradParameters = function(self) end
-               RAM.rnn[i].parameters = function() return nil end
-               RAM.rnn[i].accGradParameters = function(self) end
-               modelPreStep:get(2):get(i).accGradParameters = function(self) end
-               modelPreStep:get(2):get(i).parameters = function() return nil end
-           end
+          for i = 1, RAM.nStep - 1 do
+             RAM.action[i].parameters = function() return nil end
+             RAM.action[i].accGradParameters = function(self) end
+             RAM.rnn[i].parameters = function() return nil end
+             RAM.rnn[i].accGradParameters = function(self) end
+             modelPreStep:get(2):get(i).accGradParameters = function(self) end
+             modelPreStep:get(2):get(i).parameters = function() return nil end
+          end
        end
        
        if opt.uniform > 0 then
@@ -56,12 +56,12 @@ local function createModel(opt, modelPreStep)
        -- train dynamic action
        RAM =  modelPreStep:get(1) 
        if opt.freezeParam then   
-           for i = 1, RAM.nStep do
-               RAM.action[i].parameters = function() return nil end
-               RAM.action[i].accGradParameters = function(self) end
-               RAM.rnn[i].parameters = function() return nil end
-               RAM.rnn[i].accGradParameters = function(self) end
-           end
+          for i = 1, RAM.nStep do
+             RAM.action[i].parameters = function() return nil end
+             RAM.action[i].accGradParameters = function(self) end
+             RAM.rnn[i].parameters = function() return nil end
+             RAM.rnn[i].accGradParameters = function(self) end
+          end
        end
        
        linear = {}
@@ -85,7 +85,7 @@ local function createModel(opt, modelPreStep)
        
        for i = 1, opt.rho do
            local method = 'kaiming'
-	       decider[i].modules[3] = require('weight-init')(decider[i].modules[3], method)
+           decider[i].modules[3] = require('weight-init')(decider[i].modules[3], method)
        end
    
        attention = nn.RecurrentAttentionNoShareDynamic(RAM, decider, opt.rho, {opt.modelOutputSize})
