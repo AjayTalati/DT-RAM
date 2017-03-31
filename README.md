@@ -1,5 +1,5 @@
 # Dynamic Computational Time for Recurrent Attention Model (DT-RAM)
-Torch implementation of DT-RAM with training/testing scripts.
+Torch implementation of DT-RAM with training/testing scripts form [Dynamic Computational Time for Visual Attention](https://arxiv.org/pdf/1703.10332.pdf).
 
 # Requirements
 
