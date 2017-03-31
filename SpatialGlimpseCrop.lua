@@ -59,7 +59,7 @@ function SpatialGlimpse:updateOutput(inputTable)
    self._pad = self._pad or input.new()
    
    for sampleIdx=1,self.output:size(1) do
-       local outputSample = self.output[sampleIdx]
+      local outputSample = self.output[sampleIdx]
       local inputSample = input[sampleIdx]
       local yx = location[sampleIdx]
       -- (-1,-1) top left corner, (1,1) bottom right corner of image
