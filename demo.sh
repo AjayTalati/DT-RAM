@@ -5,7 +5,7 @@ val=$2
 rho=$3
 
 echo 'training 1 step'
-th main.lua -retrain resnet-34.t7 -resetClassifier -LR 0.01  -train_list $train  -val_list $val -RandomSizeCrop 
+th main.lua -retrain resnet-50.t7 -resetClassifier -LR 0.01  -train_list $train  -val_list $val -RandomSizeCrop 
 mv model_best.t7 save/model_step_1.t7
 
 for((i=2;i<=$rho;i++)) 
